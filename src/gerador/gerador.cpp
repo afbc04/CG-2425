@@ -1,71 +1,46 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "Triangles.h"
+#include <cstring>
+#include "figuras/Triangles.h"
+#include "ficheiro3d/Ficheiro.h"
 
 using namespace std;
 
-// Função para desenhar um plano e armazenar os triângulos em um vetor
-void desenhaPlano(int length, int divisions, vector<Triangle>& lista) {
-//    lista.push_back(Triangle(1, 1, 1));  // Adicionando um triângulo de exemplo
+vector<Triangle> geraEsfera(double radius, double slides, double stacks) {
+
+    //TODO:
+    vector<Triangle> lista;
+    return lista;
+
 }
 
-void escreverBinario(const string& nomeArquivo, const vector<Triangle>& lista) {
+vector<Triangle> geraCaixa(double length, double divisions) {
 
-    ofstream f(nomeArquivo, ios::binary);
-    if (!f) {
-        cerr << "Erro ao abrir o arquivo para escrita!" << endl;
-        return;
-    }
+    //TODO:
+    vector<Triangle> lista;
+    return lista;
 
-    // Escrevendo o tamanho dos vetores para facilitar a leitura posterior
-    int size = lista.size();
-    f.write(reinterpret_cast<const char*>(&size), sizeof(int));
-
-    for (Triangle t : lista) {
-
-        Ponto p1 = t.p1;
-
-        f.write(reinterpret_cast<const char*>(&p1.x), sizeof(double));
-        f.write(reinterpret_cast<const char*>(&p1.y), sizeof(double));
-        f.write(reinterpret_cast<const char*>(&p1.z), sizeof(double));
-
-        Ponto p2 = t.p2;
-
-        f.write(reinterpret_cast<const char*>(&p2.x), sizeof(double));
-        f.write(reinterpret_cast<const char*>(&p2.y), sizeof(double));
-        f.write(reinterpret_cast<const char*>(&p2.z), sizeof(double));
-
-        Ponto p3 = t.p3;
-
-        f.write(reinterpret_cast<const char*>(&p3.x), sizeof(double));
-        f.write(reinterpret_cast<const char*>(&p3.y), sizeof(double));
-        f.write(reinterpret_cast<const char*>(&p3.z), sizeof(double));
-    }
-
-    f.close();
 }
 
+vector<Triangle> geraCone(double radius, double height, double slices, double stacks) {
 
-// Função que recebe uma lista de triângulos
-/*
-void gera3D(const vector<Triangle>& lista) {
-    cout << "Lista de triângulos recebida:\n";
-    for (const Triangle& t : lista) {
-        cout << "Triângulo: (" << t.x << ", " << t.y << ", " << t.z << ")\n";
-    }
-}*/
+    //TODO:
+    vector<Triangle> lista;
+    return lista;
 
-vector<Triangle> geraPlano(double size, double dimensoes) {
+}
+
+vector<Triangle> geraPlano(double length, double divisions) {
 
     vector<Triangle> lista;
 
-    double inicio = size/2;
-    double salto = size / dimensoes;
+    double inicio = length/2;
+    double salto = length / divisions;
 
-    for (int i = 0; i < dimensoes; i++) {
+    for (int i = 0; i < divisions; i++) {
 
-        for (int j = 0; j < dimensoes ; j++) {
+        for (int j = 0; j < divisions ; j++) {
 
             double ponto_inicial_x = -inicio;
             ponto_inicial_x += (i*salto);
@@ -73,41 +48,13 @@ vector<Triangle> geraPlano(double size, double dimensoes) {
             double ponto_inicial_z = -inicio;
             ponto_inicial_z += (j*salto);
 
-            Ponto p1_1 = Ponto(ponto_inicial_x,0,ponto_inicial_z);
+            Ponto p1_1 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z + salto);
             Ponto p1_2 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z);
-            Ponto p1_3 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z + salto);
-
-            cout << "Triangulo 1\n";
-            cout << "Ponto 1\n";
-            cout << p1_1.x << "\n";
-            cout << p1_1.y << "\n";
-            cout << p1_1.z << "\n";
-            cout << "Ponto 2\n";
-            cout << p1_2.x << "\n";
-            cout << p1_2.y << "\n";
-            cout << p1_2.z << "\n";
-            cout << "Ponto 3\n";
-            cout << p1_3.x << "\n";
-            cout << p1_3.y << "\n";
-            cout << p1_3.z << "\n";
-
+            Ponto p1_3 = Ponto(ponto_inicial_x,0,ponto_inicial_z);
+            
             Ponto p2_1 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z + salto);
             Ponto p2_2 = Ponto(ponto_inicial_x,0,ponto_inicial_z);
             Ponto p2_3 = Ponto(ponto_inicial_x,0,ponto_inicial_z + salto);
-
-            cout << "Triangulo 2\n";
-            cout << "Ponto 1\n";
-            cout << p2_1.x << "\n";
-            cout << p2_1.y << "\n";
-            cout << p2_1.z << "\n";
-            cout << "Ponto 2\n";
-            cout << p2_2.x << "\n";
-            cout << p2_2.y << "\n";
-            cout << p2_2.z << "\n";
-            cout << "Ponto 3\n";
-            cout << p2_3.x << "\n";
-            cout << p2_3.y << "\n";
-            cout << p2_3.z << "\n";
 
             lista.push_back(Triangle(p1_1,p1_2,p1_3));
             lista.push_back(Triangle(p2_1,p2_2,p2_3));
@@ -120,12 +67,120 @@ vector<Triangle> geraPlano(double size, double dimensoes) {
 
 }
 
-int main() {
-    vector<Triangle> lista = geraPlano(2,3);
+//Main do Gerador
+int main(int argn, char** argv) {
 
-    //desenhaPlano(10, 5, lista); // Preenchendo a lista de triângulos
-    //gera3D(lista); // Enviando para processamento
-    escreverBinario("teste.3d",lista);
+    const char* uso_sphere = "./generator sphere [RAIO] [SLICES] [STACKS] [NOME DO FICHEIRO]\n";
+    const char* uso_box = "./generator box [TAMANHO] [DIVISÃO] [NOME DO FICHEIRO]\n";
+    const char* uso_cone = "./generator cone [RAIO] [ALTURA] [SLICES] [STACKS] [NOME DO FICHEIRO]\n";
+    const char* uso_plane = "./generator plane [TAMANHO] [DIVISÕES] [NOME DO FICHEIRO]\n";
 
-    return 0;
+    if (argn < 2) {
+        cerr << "Argumentos inválidos!\n";
+        cerr << "USO:\n";
+        cerr << uso_sphere;
+        cerr << uso_box;
+        cerr << uso_cone;
+        cerr << uso_plane;
+
+        return 1;
+    }
+
+    //Esfera
+    if (strcmp(argv[1],"sphere") == 0) {
+
+        if (argn >= 6) {
+
+            double radius = strtod(argv[2],nullptr);
+            double slides = strtod(argv[3],nullptr);
+            double stacks = strtod(argv[4],nullptr);
+            escreverBinario(argv[5],geraEsfera(radius,slides,stacks));
+
+            cout << "Ficheiro " << argv[5] << " foi criado!\n";
+            return 0;
+
+        }
+        else {
+            cerr << "Argumentos em falta";
+            cerr << uso_sphere;
+            return 2;
+        }
+
+    }
+
+    //Caixa
+    if (strcmp(argv[1],"box") == 0) {
+
+        if (argn >= 5) {
+
+            double length = strtod(argv[2],nullptr);
+            double divisions = strtod(argv[3],nullptr);
+            escreverBinario(argv[4],geraCaixa(length,divisions));
+
+            cout << "Ficheiro " << argv[4] << " foi criado!\n";
+            return 0;
+
+        }
+        else {
+            cerr << "Argumentos em falta";
+            cerr << uso_box;
+            return 2;
+        }
+
+    }
+
+    //Cone
+    if (strcmp(argv[1],"cone") == 0) {
+
+        if (argn >= 7) {
+
+            double radius = strtod(argv[2],nullptr);
+            double height = strtod(argv[3],nullptr);
+            double slides = strtod(argv[4],nullptr);
+            double stacks = strtod(argv[5],nullptr);
+            escreverBinario(argv[6],geraCone(radius,height,slides,stacks));
+
+            cout << "Ficheiro " << argv[6] << " foi criado!\n";
+            return 0;
+
+        }
+        else {
+            cerr << "Argumentos em falta";
+            cerr << uso_cone;
+            return 2;
+        }
+
+    }
+
+    //Plano
+    if (strcmp(argv[1],"plane") == 0) {
+
+        if (argn >= 5) {
+
+            int length = strtod(argv[2],nullptr);
+            int divisions = strtod(argv[3],nullptr);
+            escreverBinario(argv[4],geraPlano(length,divisions));
+
+            cout << "Ficheiro " << argv[4] << " foi criado!\n";
+            return 0;
+
+        }
+        else {
+            cerr << "Argumentos em falta";
+            cerr << uso_plane;
+            return 2;
+        }
+
+    }
+
+    //Erro
+    cerr << "Opção " << argv[1] <<" não disponível\n";
+    cerr << "USO:\n";
+    cerr << uso_sphere;
+    cerr << uso_box;
+    cerr << uso_cone;
+    cerr << uso_plane;
+
+    return 1;
+
 }
