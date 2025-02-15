@@ -1,2 +1,5 @@
 bin/
 .vscode/
+
+build/*
+!build/README.md

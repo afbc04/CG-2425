@@ -46,22 +46,27 @@ void renderScene(void) {
               0.0f, 0.0f, 0.0f,
               0.0f, 1.0f, 0.0f);
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0f,1,1,1000);
+	glMatrixMode(GL_MODELVIEW);
+
     glColor3f(0.0f, 1.0f, 0.0f);  // Verde para o plano
     
     //CHAT
     //glDisable(GL_CULL_FACE);
 
     
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT, GL_LINE);
     glBegin(GL_TRIANGLES);
     
     for (Triangle t : lista) {
 
         glColor3f(1,1,1);
 
-		Ponto a = t.p1;
+		Ponto a = t.p3;
 		Ponto b = t.p2;
-		Ponto c = t.p3;
+		Ponto c = t.p1;
 
         /*
         
@@ -69,9 +74,9 @@ void renderScene(void) {
         
         */
 
-		glVertex3f(a.x,a.y,a.z);
-		glVertex3f(b.x,b.y,b.z);
-		glVertex3f(c.x,c.y,c.z);
+	   glVertex3f(a.x,a.y,a.z);
+	   glVertex3f(b.x,b.y,b.z);
+	   glVertex3f(c.x,c.y,c.z);
 
     }
     
@@ -117,7 +122,7 @@ int main(int argc, char** argv)
 	glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100,100);
-	glutInitWindowSize(800,800);
+	glutInitWindowSize(512,512);
 	glutCreateWindow("Janela");
 
 	// put callback registry here
