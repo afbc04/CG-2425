@@ -6,22 +6,19 @@
 #include "ficheiro3d/Ficheiro.h"
 #include <math.h>
 
-#define PI 3.14159265358979323846
-
 using namespace std;
 
 vector<Triangle> geraEsfera(double radius, double slides, double stacks) {
 
-    //TODO:
     vector<Triangle> lista;
 
     for (int i = 0; i < stacks; ++i) {
-        float phi1 = PI * i / stacks;
-        float phi2 = PI * (i + 1) / stacks;
+        float phi1 = M_PI * i / stacks;
+        float phi2 = M_PI * (i + 1) / stacks;
 
         for (int j = 0; j < slides; ++j) {
-            float theta1 = 2.0f * PI * j / slides;
-            float theta2 = 2.0f * PI * (j + 1) / slides;
+            float theta1 = 2.0f * M_PI * j / slides;
+            float theta2 = 2.0f * M_PI * (j + 1) / slides;
 
             float x1 = radius * sin(phi1) * cos(theta1);
             float y1 = radius * cos(phi1);
