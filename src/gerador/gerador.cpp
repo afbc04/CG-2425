@@ -18,24 +18,24 @@ vector<Triangle> geraEsfera(double radius, double slices, double stacks) {
         float phi2 = M_PI * (i + 1) / stacks;
 
         for (int j = 0; j < slices; ++j) {
-            float theta1 = 2.0f * M_PI * j / slices;
-            float theta2 = 2.0f * M_PI * (j + 1) / slices;
+            float theta1 = -2.0f * M_PI * j / slices;
+            float theta2 = -2.0f * M_PI * (j + 1) / slices;
 
-            float x1 = radius * sin(phi1) * cos(theta1);
+            float x1 = radius * sin(phi1) * sin(theta1);
             float y1 = radius * cos(phi1);
-            float z1 = radius * sin(phi1) * sin(theta1);
+            float z1 = radius * sin(phi1) * cos(theta1);
 
-            float x2 = radius * sin(phi2) * cos(theta1);
+            float x2 = radius * sin(phi2) * sin(theta1);
             float y2 = radius * cos(phi2);
-            float z2 = radius * sin(phi2) * sin(theta1);
+            float z2 = radius * sin(phi2) * cos(theta1);
 
-            float x3 = radius * sin(phi1) * cos(theta2);
+            float x3 = radius * sin(phi1) * sin(theta2);
             float y3 = radius * cos(phi1);
-            float z3 = radius * sin(phi1) * sin(theta2);
+            float z3 = radius * sin(phi1) * cos(theta2);
 
-            float x4 = radius * sin(phi2) * cos(theta2);
+            float x4 = radius * sin(phi2) * sin(theta2);
             float y4 = radius * cos(phi2);
-            float z4 = radius * sin(phi2) * sin(theta2);
+            float z4 = radius * sin(phi2) * cos(theta2);
 
             Ponto p1 = Ponto(x1,y1,z1);
             Ponto p2 = Ponto(x2,y2,z2);

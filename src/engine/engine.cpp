@@ -47,6 +47,10 @@ double far = 0;
 bool modo_debug = false;
 int quantidade_max_triangulos = 0;
 
+// Angulos - Teste
+double angle_x = 0;
+double angle_y = 0;
+
 // -------
 
 void changeSize(int w, int h)
@@ -80,6 +84,9 @@ void renderScene(void) {
               camera_x, camera_y, camera_z,
               normal_x, normal_y, normal_z);
 
+	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+
 	//Eixos ##########
     glBegin(GL_LINES);
 
@@ -103,7 +110,7 @@ void renderScene(void) {
 	//Desenhar figuras ##########
     glPolygonMode(GL_FRONT, GL_LINE);
     glBegin(GL_TRIANGLES);
-    
+
 	int i = 0;
 	glColor3f(1,1,1);
 
@@ -138,13 +145,13 @@ void renderScene(void) {
 
 //Função que processa as teclas especiais
 void pressSpecialKey(int key, int x, int y) {
-	/*
+	
     switch (key) {
-    case GLUT_KEY_UP:    angleX -= 5.0f; break;
-    case GLUT_KEY_DOWN:  angleX += 5.0f; break;
-    case GLUT_KEY_LEFT:  angleY -= 5.0f; break;
-    case GLUT_KEY_RIGHT: angleY += 5.0f; break;
-    }*/
+    case GLUT_KEY_UP:    angle_x -= 5.0f; break;
+    case GLUT_KEY_DOWN:  angle_x += 5.0f; break;
+    case GLUT_KEY_LEFT:  angle_y -= 5.0f; break;
+    case GLUT_KEY_RIGHT: angle_y += 5.0f; break;
+    }
 	glutPostRedisplay();
 }
 
