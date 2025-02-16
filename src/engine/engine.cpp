@@ -100,7 +100,6 @@ void renderScene(void) {
 
     glEnd();
 
-
 	//Desenhar figuras ##########
     glPolygonMode(GL_FRONT, GL_LINE);
     glBegin(GL_TRIANGLES);

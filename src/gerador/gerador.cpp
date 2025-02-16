@@ -8,17 +8,18 @@
 
 using namespace std;
 
-vector<Triangle> geraEsfera(double radius, double slides, double stacks) {
+vector<Triangle> geraEsfera(double radius, double slices, double stacks) {
 
     vector<Triangle> lista;
 
     for (int i = 0; i < stacks; ++i) {
+
         float phi1 = M_PI * i / stacks;
         float phi2 = M_PI * (i + 1) / stacks;
 
-        for (int j = 0; j < slides; ++j) {
-            float theta1 = 2.0f * M_PI * j / slides;
-            float theta2 = 2.0f * M_PI * (j + 1) / slides;
+        for (int j = 0; j < slices; ++j) {
+            float theta1 = 2.0f * M_PI * j / slices;
+            float theta2 = 2.0f * M_PI * (j + 1) / slices;
 
             float x1 = radius * sin(phi1) * cos(theta1);
             float y1 = radius * cos(phi1);
@@ -41,8 +42,8 @@ vector<Triangle> geraEsfera(double radius, double slides, double stacks) {
             Ponto p3 = Ponto(x3,y3,z3);
             Ponto p4 = Ponto(x4,y4,z4);
 
-            lista.push_back(Triangle(p1,p2,p3));
-            lista.push_back(Triangle(p2,p4,p3));
+            lista.push_back(Triangle(p2,p1,p3));
+            lista.push_back(Triangle(p2,p3,p4));
         }
     }
 
