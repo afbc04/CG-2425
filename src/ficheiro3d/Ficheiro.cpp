@@ -7,14 +7,14 @@
 using namespace std;
 
 //Escrever uma figura em ficheiro texto
-void escreverBinario(const string nome_ficheiro, const vector<Triangle>& lista) {
+bool escreverBinario(const string nome_ficheiro, const vector<Triangle>& lista) {
 
     ofstream f (nome_ficheiro, ios::binary);
 
     //Verifica se correu tudo bem
     if (!f) {
         cerr << "Erro ao criar o ficheiro " << nome_ficheiro << endl;
-        return;
+        return false;
     }
 
     //Escrever a quantidade de triangulos
@@ -44,6 +44,7 @@ void escreverBinario(const string nome_ficheiro, const vector<Triangle>& lista) 
     }
 
     f.close();
+    return true;
 }
 
 //Ler Ficheiros .3d

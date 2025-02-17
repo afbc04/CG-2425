@@ -24,6 +24,8 @@ add_definitions(${OpenGL_DEFINITIONS})
 add_library(Triangles OBJECT src/figuras/Triangles.cpp)
 add_library(Ficheiro OBJECT src/ficheiro3d/Ficheiro.cpp)
 add_library(TinyXML OBJECT src/tinyxml/tinyxml.cpp src/tinyxml/tinyxmlparser.cpp src/tinyxml/tinyxmlerror.cpp src/tinyxml/tinystr.cpp)
+add_library(World OBJECT src/engine/World.cpp)
+add_library(processaXML OBJECT src/engine/processaXML.cpp)
 
 #Generator
 add_executable(generator src/gerador/gerador.cpp 
@@ -34,7 +36,9 @@ add_executable(generator src/gerador/gerador.cpp
 add_executable(engine src/engine/engine.cpp 
                       $<TARGET_OBJECTS:Triangles> 
                       $<TARGET_OBJECTS:Ficheiro>
-					  $<TARGET_OBJECTS:TinyXML>)
+					  $<TARGET_OBJECTS:TinyXML>
+					  $<TARGET_OBJECTS:World>
+					  $<TARGET_OBJECTS:processaXML>)
 
 if(NOT OPENGL_FOUND)
     message(ERROR "OpenGL not found!")

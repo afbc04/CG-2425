@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void escreverBinario(const string nome_ficheiro, const vector<Triangle>& lista);
+bool escreverBinario(const string nome_ficheiro, const vector<Triangle>& lista);
 vector<Triangle> lerBinario(const string nome_ficheiro);
 
 #endif

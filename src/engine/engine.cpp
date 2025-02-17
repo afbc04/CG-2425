@@ -16,45 +16,13 @@
 #include "figuras/Triangles.h"
 #include "ficheiro3d/Ficheiro.h"
 #include "tinyxml/tinyxml.h"
+#include "engine/World.h"
+
+#include "engine/processaXML.h"
 
 using namespace std;
 
-//Variaveis
-vector<vector<Triangle> > modelos_a_carregar; //Lista com os modelos a carregar
-
-//Janela
-int height = 0;
-int width = 0;
-
-//Posição
-double pos_x = 0;
-double pos_y = 0;
-double pos_z = 0;
-
-//Vetor de visão
-double camera_x = 0;
-double camera_y = 0;
-double camera_z = 0;
-
-//Vetor Normal
-double normal_x = 0;
-double normal_y = 0;
-double normal_z = 0;
-
-//Projeção
-double fov = 0;
-double near = 0;
-double far = 0;
-
-//Modo debug
-bool modo_debug = false;
-int quantidade_max_triangulos = 0;
-
-// Angulos - Teste
-double angle_x = 0;
-double angle_y = 0;
-
-// -------
+World world;
 
 void changeSize(int w, int h)
 {
@@ -69,7 +37,7 @@ void changeSize(int w, int h)
 	// Load the identity matrix
 	glLoadIdentity();
 	// Set the perspective
-	gluPerspective(fov,ratio,near,far);
+	gluPerspective(world.fov,ratio,world.near,world.far);
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
 
@@ -83,12 +51,12 @@ void renderScene(void) {
 	//Iniciando a camera e posição ##########
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-    gluLookAt(pos_x, pos_y, pos_z,  // Câmera ajustada
-              camera_x, camera_y, camera_z,
-              normal_x, normal_y, normal_z);
+    gluLookAt(world.pos_x, world.pos_y, world.pos_z,  // Câmera ajustada
+              world.camera_x, world.camera_y, world.camera_z,
+              world.normal_x, world.normal_y, world.normal_z);
 
-	glRotatef(angle_x, 1.0f, 0.0f, 0.0f);
-	glRotatef(angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(world.angle_x, 1.0f, 0.0f, 0.0f);
+	glRotatef(world.angle_y, 0.0f, 1.0f, 0.0f);
 
 	//Eixos ##########
     glBegin(GL_LINES);
@@ -117,11 +85,11 @@ void renderScene(void) {
 	int i = 0;
 	glColor3f(1,1,1);
 
-    for (vector<Triangle> lista : modelos_a_carregar) {
+    for (vector<Triangle> lista : world.modelos_a_carregar) {
 
 		for (Triangle t : lista) {
 
-			if (modo_debug == false || (modo_debug == true && i <= quantidade_max_triangulos)) {
+			if (world.modo_debug == false || (world.modo_debug == true && i <= world.quantidade_max_triangulos)) {
 			
 				//Obter pontos
 				Ponto a = t.p1;
@@ -150,10 +118,10 @@ void renderScene(void) {
 void pressSpecialKey(int key, int x, int y) {
 	
     switch (key) {
-    case GLUT_KEY_UP:    angle_x -= 5.0f; break;
-    case GLUT_KEY_DOWN:  angle_x += 5.0f; break;
-    case GLUT_KEY_LEFT:  angle_y -= 5.0f; break;
-    case GLUT_KEY_RIGHT: angle_y += 5.0f; break;
+    case GLUT_KEY_UP:    world.angle_x -= 5.0f; break;
+    case GLUT_KEY_DOWN:  world.angle_x += 5.0f; break;
+    case GLUT_KEY_LEFT:  world.angle_y -= 5.0f; break;
+    case GLUT_KEY_RIGHT: world.angle_y += 5.0f; break;
     }
 	glutPostRedisplay();
 }
@@ -166,13 +134,13 @@ void pressKey(unsigned char key, int x, int y) {
 
 		//Modo debug
 		case 'l':
-			modo_debug = true;
-			quantidade_max_triangulos = 0;
+			world.modo_debug = true;
+			world.quantidade_max_triangulos = 0;
 			break;
 		
 		//Aumentar a quantidade máxima de triangulos
 		case 'k':
-			quantidade_max_triangulos++;
+			world.quantidade_max_triangulos++;
 			break;
 
     }
@@ -189,60 +157,71 @@ void printInfo() {
 
 int main(int argc, char** argv)
 {
-	//Inicialização
-	height = 512;
-	width = 512;
 
-	//Posição
-	pos_x = 3;
-	pos_y = 2;
-	pos_z = 1;
+	//Não há argumentos suficientes
+	if (argc < 2) {
 
-	//Vetor de visão
-	camera_x = 0;
-	camera_y = 0;
-	camera_z = 0;
+		cerr << "Argumentos em falta\n";
+		cerr << "USO : ./engine [CAMINHO PARA XML]\n";
 
-	//Vetor Normal
-	normal_x = 0;
-	normal_y = 1;
-	normal_z = 0;
+		return 1;
 
-	//Projeção
-	fov = 60;
-	near = 1;
-	far = 1000;
+	}
+	//Há argumentos suficientes
+	else {
+
+		//Inicializar mundo
+		world = World();
+
+		//Ler dados do xml
+		TiXmlDocument xml(argv[1]);
+
+		//XML falhou
+		if (xml.LoadFile() == false) {
+
+			cerr << "Erro ao carregar o ficheiro XML\n";
+			return 2;
+
+		}
+
+		//Processar XML - correu bem
+		if (processaXML(world,xml)) {
+
+			// put GLUT init here
+			glutInit(&argc,argv);
+			glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    		glutInitWindowPosition(100,100);
+			glutInitWindowSize(world.width,world.height);
+			glutCreateWindow("Projeto CG - 24/25");
 
 
-	// put GLUT init here
-	glutInit(&argc,argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-    glutInitWindowPosition(100,100);
-	glutInitWindowSize(width,height);
-	glutCreateWindow("Projeto CG - 24/25");
+			// put callback registry here
+			glutKeyboardFunc(&pressKey);
+			glutSpecialFunc(&pressSpecialKey);
 
-	//Carregar os modelos
-	for (int i = 1 ; i < argc ; i++) {
-		vector<Triangle> novo_modelo_carregado = lerBinario(argv[i]);
-		modelos_a_carregar.push_back(novo_modelo_carregado);
+			glutDisplayFunc(&renderScene);
+			glutReshapeFunc(&changeSize);
+			glutPostRedisplay();
+			//glutIdleFunc(&renderScene);
+
+			// some OpenGL settings
+			glEnable(GL_DEPTH_TEST);
+			glEnable(GL_CULL_FACE);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+			// enter GLUT�s main cycle
+			glutMainLoop();
+
+			return 0;
+
+		}
+		else {
+
+			cerr << "Ficheiro XML não foi corretamente processado\n";
+			return 1;
+
+		}
+
 	}
 
-	// put callback registry here
-	glutKeyboardFunc(&pressKey);
-	glutSpecialFunc(&pressSpecialKey);
-
-	glutDisplayFunc(&renderScene);
-	glutReshapeFunc(&changeSize);
-	glutPostRedisplay();
-	//glutIdleFunc(&renderScene);
-
-	// some OpenGL settings
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
-	// enter GLUT�s main cycle
-	glutMainLoop();
-	
-	return 1;
 }

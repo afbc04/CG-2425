@@ -162,10 +162,20 @@ int main(int argn, char** argv) {
             double radius = strtod(argv[2],nullptr);
             double slides = strtod(argv[3],nullptr);
             double stacks = strtod(argv[4],nullptr);
-            escreverBinario(argv[5],geraEsfera(radius,slides,stacks));
+            
+            //Gerar esfera - sucesso
+            if (escreverBinario(argv[5],geraEsfera(radius,slides,stacks))) {
 
-            cout << "Ficheiro " << argv[5] << " foi criado!\n";
-            return 0;
+                cout << "Ficheiro " << argv[5] << " foi criado!\n";
+                return 0;
+
+            }
+            else {
+
+                cerr << "Não foi possivel criar o " << argv[5] << "!\n";
+                return 1;
+
+            }
 
         }
         else {
@@ -183,10 +193,20 @@ int main(int argn, char** argv) {
 
             double length = strtod(argv[2],nullptr);
             double divisions = strtod(argv[3],nullptr);
-            escreverBinario(argv[4],geraCaixa(length,divisions));
 
-            cout << "Ficheiro " << argv[4] << " foi criado!\n";
-            return 0;
+            //Gerar Caixa - sucesso
+            if (escreverBinario(argv[4],geraCaixa(length,divisions))) {
+
+                cout << "Ficheiro " << argv[4] << " foi criado!\n";
+                return 0;
+
+            }
+            else {
+
+                cerr << "Não foi possivel criar o " << argv[4] << "!\n";
+                return 1;
+
+            }
 
         }
         else {
@@ -206,10 +226,20 @@ int main(int argn, char** argv) {
             double height = strtod(argv[3],nullptr);
             double slides = strtod(argv[4],nullptr);
             double stacks = strtod(argv[5],nullptr);
-            escreverBinario(argv[6],geraCone(radius,height,slides,stacks));
 
-            cout << "Ficheiro " << argv[6] << " foi criado!\n";
-            return 0;
+            //Gerar Cone - sucesso
+            if (escreverBinario(argv[6],geraCone(radius,height,slides,stacks))) {
+
+                cout << "Ficheiro " << argv[6] << " foi criado!\n";
+                return 0;
+
+            }
+            else {
+
+                cerr << "Não foi possivel criar o " << argv[6] << "!\n";
+                return 1;
+
+            }
 
         }
         else {
@@ -227,10 +257,20 @@ int main(int argn, char** argv) {
 
             int length = strtod(argv[2],nullptr);
             int divisions = strtod(argv[3],nullptr);
-            escreverBinario(argv[4],geraPlano(length,divisions));
 
-            cout << "Ficheiro " << argv[4] << " foi criado!\n";
-            return 0;
+            //Gerar plano - sucesso
+            if (escreverBinario(argv[4],geraPlano(length,divisions))) {
+
+                cout << "Ficheiro " << argv[4] << " foi criado!\n";
+                return 0;
+
+            }
+            else {
+
+                cerr << "Não foi possivel criar o " << argv[4] << "!\n";
+                return 1;
+
+            }
 
         }
         else {
