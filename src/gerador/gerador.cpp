@@ -52,11 +52,43 @@ vector<Triangle> geraEsfera(double radius, double slices, double stacks) {
 }
 
 vector<Triangle> geraCaixa(double length, double divisions) {
-
-    //TODO:
     vector<Triangle> lista;
-    return lista;
+    double step = length / divisions;
+    double half = length / 2.0;
 
+    for (int i = 0; i < divisions; i++) {
+        for (int j = 0; j < divisions; j++) {
+            double x1 = -half + i * step;
+            double x2 = x1 + step;
+            double y1 = -half + j * step;
+            double y2 = y1 + step;
+
+            // Face inferior (-Y)
+            lista.push_back(Triangle(Ponto(x1, -half, y1), Ponto(x1, -half, y2), Ponto(x2, -half, y1)));
+            lista.push_back(Triangle(Ponto(x2, -half, y1), Ponto(x1, -half, y2), Ponto(x2, -half, y2)));
+
+            // Face superior (+Y)
+            lista.push_back(Triangle(Ponto(x1, half, y1), Ponto(x1, half, y2), Ponto(x2, half, y1)));
+            lista.push_back(Triangle(Ponto(x2, half, y1), Ponto(x1, half, y2), Ponto(x2, half, y2)));
+
+            // Face frontal (+Z)
+            lista.push_back(Triangle(Ponto(x1, y1, half), Ponto(x1, y2, half), Ponto(x2, y1, half)));
+            lista.push_back(Triangle(Ponto(x2, y1, half), Ponto(x1, y2, half), Ponto(x2, y2, half)));
+
+            // Face traseira (-Z)
+            lista.push_back(Triangle(Ponto(x1, y1, -half), Ponto(x2, y1, -half), Ponto(x1, y2, -half)));
+            lista.push_back(Triangle(Ponto(x2, y1, -half), Ponto(x2, y2, -half), Ponto(x1, y2, -half)));
+
+            // Face esquerda (-X)
+            lista.push_back(Triangle(Ponto(-half, x1, y1), Ponto(-half, x2, y1), Ponto(-half, x1, y2)));
+            lista.push_back(Triangle(Ponto(-half, x2, y1), Ponto(-half, x2, y2), Ponto(-half, x1, y2)));
+
+            lista.push_back(Triangle(Ponto(half, x1, y1), Ponto(half, x2, y1), Ponto(half, x1, y2)));
+            lista.push_back(Triangle(Ponto(half, x2, y1), Ponto(half, x2, y2), Ponto(half, x1, y2)));
+        }
+    }
+
+    return lista;
 }
 
 vector<Triangle> geraCone(double radius, double height, double slices, double stacks) {

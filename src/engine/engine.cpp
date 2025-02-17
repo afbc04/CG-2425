@@ -1,6 +1,9 @@
+
 #ifdef __APPLE__
+#include <OpenGL/gl.h>
 #include <GLUT/glut.h>
 #else
+#include <GL/gl.h>
 #include <GL/glut.h>
 #endif
 
@@ -17,7 +20,7 @@
 using namespace std;
 
 //Variaveis
-vector<vector<Triangle>> modelos_a_carregar; //Lista com os modelos a carregar
+vector<vector<Triangle> > modelos_a_carregar; //Lista com os modelos a carregar
 
 //Janela
 int height = 0;

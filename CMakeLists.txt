@@ -77,3 +77,16 @@ else (WIN32) #Linux and Mac
 	endif(NOT GLUT_FOUND)
 	
 endif(WIN32)
+# --- Verifica se está no Mac ---
+if(APPLE)
+    find_package(OpenGL REQUIRED)
+    find_package(GLUT REQUIRED)
+
+    include_directories(${OpenGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
+    target_link_libraries(engine ${OpenGL_LIBRARIES} ${GLUT_LIBRARIES})
+    target_link_libraries(generator ${OpenGL_LIBRARIES} ${GLUT_LIBRARIES})
+
+    if(NOT GLUT_FOUND)
+        message(ERROR ": GLUT não encontrado!")
+    endif()
+endif()
