@@ -65,8 +65,6 @@ vector<Triangle> geraCaixa(double length, double divisions) {
             double x2 = x1 + step;
             double y1 = -half + j * step;
             double y2 = y1 + step;
-            double z1 = y1;
-            double z2 = y2;
 
             // Face inferior (-Y) (corrigida)
             lista.push_back(Triangle(Ponto(x1, -half, y1), Ponto(x2, -half, y1), Ponto(x1, -half, y2)));
@@ -96,10 +94,49 @@ vector<Triangle> geraCaixa(double length, double divisions) {
 
     return lista;
 }
-vector<Triangle> geraCone(double radius, double height, double slices, double stacks) {
 
-    //TODO:
+vector<Triangle> geraCone(double radius, double height, int slices, int stacks) {
     vector<Triangle> lista;
+
+    //Base do cone
+    for (int i = 0; i < slices; i++) {
+
+        double alfa1 = ((2.0f * M_PI)/slices) * i;
+        double alfa2 = ((2.0f * M_PI)/slices) * (i+1);
+
+        Ponto origem = Ponto(0,0,0);
+        Ponto p1 = Ponto(radius*sin(alfa1),0,radius*cos(alfa1));
+        Ponto p2 = Ponto(radius*sin(alfa2),0,radius*cos(alfa2));
+
+        lista.push_back(Triangle(origem,p2,p1));
+    }
+
+    //Corpo do cone
+    double delta_h = height/stacks;
+    double h = 0;
+    for (int i = 0; i < stacks; i++) {
+
+        double h2 = h + delta_h; //Altura da circunferência de cima
+        double raio1 = radius * ((height - h) / height); //Raio da circunferencia de baixo
+        double raio2 = radius * ((height - h2) / height); //Raio da circunferencia de cima
+
+        for (int j = 0; j < slices; j++) {
+
+            double alfa1 = (2.0f * M_PI)/slices * j;
+            double alfa2 = (2.0f * M_PI)/slices * (j+1);
+
+            Ponto p1 = Ponto(raio2*sin(alfa1),h2,raio2*cos(alfa1));
+            Ponto p2 = Ponto(raio2*sin(alfa2),h2,raio2*cos(alfa2));
+            Ponto p3 = Ponto(raio1*sin(alfa1),h,raio1*cos(alfa1));
+            Ponto p4 = Ponto(raio1*sin(alfa2),h,raio1*cos(alfa2));
+
+            lista.push_back(Triangle(p3, p4, p1));
+            lista.push_back(Triangle(p1, p4, p2));
+        }
+
+        h += delta_h;
+    }
+
     return lista;
 
 }

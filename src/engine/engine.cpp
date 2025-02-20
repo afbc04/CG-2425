@@ -57,6 +57,7 @@ void renderScene(void) {
 
 	glRotatef(world.angle_x, 1.0f, 0.0f, 0.0f);
 	glRotatef(world.angle_y, 0.0f, 1.0f, 0.0f);
+	glRotatef(world.angle_z, 0.0f, 0.0f, 1.0f);
 
 	//Eixos ##########
     glBegin(GL_LINES);
@@ -66,26 +67,27 @@ void renderScene(void) {
     glVertex3f(-100.0f, 0.0f, 0.0f);
     glVertex3f(100.0f, 0.0f, 0.0f);
 
-	//Eixo Y
+	// //Eixo Y
     glColor3f(0.0f, 1.0f, 0.0f);
     glVertex3f(0.0f, -100.0f, 0.0f);
     glVertex3f(0.0f, 100.0f, 0.0f);
 
-	//Eixo Z
+	// //Eixo Z
     glColor3f(0.0f, 0.0f, 1.0f);
     glVertex3f(0.0f, 0.0f, -100.0f);
     glVertex3f(0.0f, 0.0f, 100.0f);
 
     glEnd();
 
+	//glDisable(GL_CULL_FACE);
 	//Desenhar figuras ##########
     glPolygonMode(GL_FRONT, GL_LINE);
     glBegin(GL_TRIANGLES);
 
 	int i = 0;
 	glColor3f(1,1,1);
-
-    for (vector<Triangle> lista : world.modelos_a_carregar) {
+	
+	for (vector<Triangle> lista : world.modelos_a_carregar) {
 
 		for (Triangle t : lista) {
 
@@ -129,8 +131,8 @@ void pressSpecialKey(int key, int x, int y) {
 //Função que processa as teclas normais
 void pressKey(unsigned char key, int x, int y) {
     switch (key) {
-    /*case '+': targetZoom -= 0.5f; break;
-    case '-': targetZoom += 0.5f; break;*/
+    case '+': world.angle_z += 5.0f; break;
+    case '-': world.angle_z -= 5.0f; break;
 
 		//Modo debug
 		case 'l':

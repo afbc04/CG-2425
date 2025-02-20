@@ -46,5 +46,6 @@ World::World() {
     // Angulos - Teste
     this->angle_x = 0;
     this->angle_y = 0;
+    this->angle_z = 0;
 
 }

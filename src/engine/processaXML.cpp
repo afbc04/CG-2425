@@ -20,7 +20,7 @@ void processaXML_janela(FILE* f,World& w,TiXmlElement* janela) {
         }
         else {
             w.width = atoi(width);
-            fprintf(f,"[JANELA::width] Definido!\n");
+            fprintf(f,"[JANELA::width] Definido! (%d)\n",w.width);
         }
 
 
@@ -33,7 +33,7 @@ void processaXML_janela(FILE* f,World& w,TiXmlElement* janela) {
         }
         else {
             w.height = atoi(height);
-            fprintf(f,"[JANELA::height] Definido!\n");
+            fprintf(f,"[JANELA::height] Definido! (%d)\n",w.height);
         }
 
 }
@@ -60,8 +60,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::position::x] Não existe\n");
             }
             else {
-                w.pos_x = atoi(position_x);
-                fprintf(f,"[CAMERA::position::x] Definido!\n");
+                w.pos_x = atof(position_x);
+                fprintf(f,"[CAMERA::position::x] Definido! (%f)\n",w.pos_x);
             }
 
             //Obter posição y
@@ -72,8 +72,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::position::y] Não existe\n");
             }
             else {
-                w.pos_y = atoi(position_y);
-                fprintf(f,"[CAMERA::position::y] Definido!\n");
+                w.pos_y = atof(position_y);
+                fprintf(f,"[CAMERA::position::y] Definido! (%f)\n",w.pos_y);
             }
 
             //Obter posição z
@@ -84,8 +84,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::position::z] Não existe\n");
             }
             else {
-                w.pos_z = atoi(position_z);
-                fprintf(f,"[CAMERA::position::z] Definido!\n");
+                w.pos_z = atof(position_z);
+                fprintf(f,"[CAMERA::position::z] Definido! (%f)\n",w.pos_z);
             }
 
         }
@@ -108,8 +108,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::lookAt::x] Não existe\n");
             }
             else {
-                w.camera_x = atoi(camera_x);
-                fprintf(f,"[CAMERA::lookAt::x] Definido!\n");
+                w.camera_x = atof(camera_x);
+                fprintf(f,"[CAMERA::lookAt::x] Definido! (%f)\n",w.camera_x);
             }
 
             //Obter camera y
@@ -120,8 +120,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::lookAt::y] Não existe\n");
             }
             else {
-                w.camera_y = atoi(camera_y);
-                fprintf(f,"[CAMERA::lookAt::y] Definido!\n");
+                w.camera_y = atof(camera_y);
+                fprintf(f,"[CAMERA::lookAt::y] Definido! (%f)\n",w.camera_y);
             }
 
             //Obter camera z
@@ -132,8 +132,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::lookAt::z] Não existe\n");
             }
             else {
-                w.camera_z = atoi(camera_z);
-                fprintf(f,"[CAMERA::lookAt::z] Definido!\n");
+                w.camera_z = atof(camera_z);
+                fprintf(f,"[CAMERA::lookAt::z] Definido! (%f)\n",w.camera_z);
             }
 
         }
@@ -156,8 +156,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::up::x] Não existe\n");
             }
             else {
-                w.normal_x = atoi(up_x);
-                fprintf(f,"[CAMERA::up::x] Definido!\n");
+                w.normal_x = atof(up_x);
+                fprintf(f,"[CAMERA::up::x] Definido! (%f)\n",w.normal_x);
             }
 
             //Obter vetor normal y
@@ -168,8 +168,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::up::y] Não existe\n");
             }
             else {
-                w.normal_y = atoi(up_y);
-                fprintf(f,"[CAMERA::up::y] Definido!\n");
+                w.normal_y = atof(up_y);
+                fprintf(f,"[CAMERA::up::y] Definido! (%f)\n",w.normal_y);
             }
 
             //Obter vetor normal z
@@ -180,8 +180,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::up::z] Não existe\n");
             }
             else {
-                w.normal_z = atoi(up_z);
-                fprintf(f,"[CAMERA::up::z] Definido!\n");
+                w.normal_z = atof(up_z);
+                fprintf(f,"[CAMERA::up::z] Definido! (%f)\n",w.normal_z);
             }
 
         }
@@ -204,8 +204,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::projection::fov] Não existe\n");
             }
             else {
-                w.fov = atoi(fov);
-                fprintf(f,"[CAMERA::projection::fov] Definido!\n");
+                w.fov = atof(fov);
+                fprintf(f,"[CAMERA::projection::fov] Definido! (%f)\n",w.fov);
             }
 
             //Obter near
@@ -216,8 +216,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::projection::near] Não existe\n");
             }
             else {
-                w.near = atoi(near);
-                fprintf(f,"[CAMERA::projection::near] Definido!\n");
+                w.near = atof(near);
+                fprintf(f,"[CAMERA::projection::near] Definido! (%f)\n",w.near);
             }
 
             //Obter far
@@ -228,8 +228,8 @@ void processaXML_camera(FILE* f,World& w,TiXmlElement* camera) {
                 fprintf(f,"[CAMERA::projection::far] Não existe\n");
             }
             else {
-                w.far = atoi(far);
-                fprintf(f,"[CAMERA::projection::far] Definido!\n");
+                w.far = atof(far);
+                fprintf(f,"[CAMERA::projection::far] Definido! (%f)\n",w.far);
             }
 
         }

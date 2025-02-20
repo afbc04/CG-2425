@@ -47,6 +47,7 @@ using namespace std;
             // Angulos - Teste
             double angle_x = 0;
             double angle_y = 0;
+            double angle_z = 0;
 
             World();
     };
