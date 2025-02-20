@@ -50,8 +50,11 @@ vector<Triangle> geraEsfera(double radius, double slices, double stacks) {
     return lista;
 
 }
-
 vector<Triangle> geraCaixa(double length, double divisions) {
+    if (divisions <= 0) {
+        throw invalid_argument("divisions must be greater than zero");
+    }
+
     vector<Triangle> lista;
     double step = length / divisions;
     double half = length / 2.0;
@@ -62,35 +65,37 @@ vector<Triangle> geraCaixa(double length, double divisions) {
             double x2 = x1 + step;
             double y1 = -half + j * step;
             double y2 = y1 + step;
+            double z1 = y1;
+            double z2 = y2;
 
-            // Face inferior (-Y)
-            lista.push_back(Triangle(Ponto(x1, -half, y1), Ponto(x1, -half, y2), Ponto(x2, -half, y1)));
-            lista.push_back(Triangle(Ponto(x2, -half, y1), Ponto(x1, -half, y2), Ponto(x2, -half, y2)));
+            // Face inferior (-Y) (corrigida)
+            lista.push_back(Triangle(Ponto(x1, -half, y1), Ponto(x2, -half, y1), Ponto(x1, -half, y2)));
+            lista.push_back(Triangle(Ponto(x2, -half, y1), Ponto(x2, -half, y2), Ponto(x1, -half, y2)));
 
-            // Face superior (+Y)
+            // Face superior (+Y) (corrigida)
             lista.push_back(Triangle(Ponto(x1, half, y1), Ponto(x1, half, y2), Ponto(x2, half, y1)));
             lista.push_back(Triangle(Ponto(x2, half, y1), Ponto(x1, half, y2), Ponto(x2, half, y2)));
 
-            // Face frontal (+Z)
-            lista.push_back(Triangle(Ponto(x1, y1, half), Ponto(x1, y2, half), Ponto(x2, y1, half)));
-            lista.push_back(Triangle(Ponto(x2, y1, half), Ponto(x1, y2, half), Ponto(x2, y2, half)));
+            // Face frontal (+Z) (corrigida)
+            lista.push_back(Triangle(Ponto(x1, y1, half), Ponto(x2, y1, half), Ponto(x1, y2, half)));
+            lista.push_back(Triangle(Ponto(x2, y1, half), Ponto(x2, y2, half), Ponto(x1, y2, half)));
 
-            // Face traseira (-Z)
-            lista.push_back(Triangle(Ponto(x1, y1, -half), Ponto(x2, y1, -half), Ponto(x1, y2, -half)));
-            lista.push_back(Triangle(Ponto(x2, y1, -half), Ponto(x2, y2, -half), Ponto(x1, y2, -half)));
+            // Face traseira (-Z) (corrigida)
+            lista.push_back(Triangle(Ponto(x1, y1, -half), Ponto(x1, y2, -half), Ponto(x2, y1, -half)));
+            lista.push_back(Triangle(Ponto(x2, y1, -half), Ponto(x1, y2, -half), Ponto(x2, y2, -half)));
 
-            // Face esquerda (-X)
-            lista.push_back(Triangle(Ponto(-half, x1, y1), Ponto(-half, x2, y1), Ponto(-half, x1, y2)));
-            lista.push_back(Triangle(Ponto(-half, x2, y1), Ponto(-half, x2, y2), Ponto(-half, x1, y2)));
+            // Face esquerda (-X) (corrigida)
+            lista.push_back(Triangle(Ponto(-half, y1, x1), Ponto(-half, y1, x2), Ponto(-half, y2, x1)));
+            lista.push_back(Triangle(Ponto(-half, y2, x1), Ponto(-half, y1, x2), Ponto(-half, y2, x2)));
 
-            lista.push_back(Triangle(Ponto(half, x1, y1), Ponto(half, x2, y1), Ponto(half, x1, y2)));
-            lista.push_back(Triangle(Ponto(half, x2, y1), Ponto(half, x2, y2), Ponto(half, x1, y2)));
+            // Face direita (+X) (corrigida)
+            lista.push_back(Triangle(Ponto(half, y1, x1), Ponto(half, y2, x1), Ponto(half, y1, x2)));
+            lista.push_back(Triangle(Ponto(half, y2, x1), Ponto(half, y2, x2), Ponto(half, y1, x2)));
         }
     }
 
     return lista;
 }
-
 vector<Triangle> geraCone(double radius, double height, double slices, double stacks) {
 
     //TODO:

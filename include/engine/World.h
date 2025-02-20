@@ -14,7 +14,7 @@ using namespace std;
     class World {
         public:
             
-            vector<vector<Triangle>> modelos_a_carregar; //Lista com os modelos a carregar
+            vector<vector<Triangle> > modelos_a_carregar; //Lista com os modelos a carregar
 
             //Janela
             int height = 0;

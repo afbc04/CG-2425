@@ -13,7 +13,7 @@ using namespace std;
 World::World() {
 
     //Variaveis
-    this->modelos_a_carregar = vector<vector<Triangle>>(); //Lista com os modelos a carregar
+    this->modelos_a_carregar = vector<vector<Triangle> >(); //Lista com os modelos a carregar
 
     //Janela
     this->height = 0;
