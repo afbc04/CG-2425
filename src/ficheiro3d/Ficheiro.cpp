@@ -89,3 +89,54 @@ vector<Triangle> lerBinario(const string nome_ficheiro) {
 
     return lista;
 }
+
+//Ficheiro .3d para texto
+int ficheiroParaTexto(const string nome_ficheiro, const string output) {
+
+    ifstream f(nome_ficheiro, ios::binary);
+    ofstream out(output, ios::binary);
+
+    //Verifica se correu tudo bem
+    if (!f || !out) {
+        return 0;
+    }
+
+    //Ler quantidade de triangulos a ler
+    int tamanho;
+    f.read(reinterpret_cast<char*>(&tamanho), sizeof(int));
+    out << tamanho << "\n\n";
+
+    //Ler os triangulos
+    for (int i = 0; i < tamanho; i++) {
+
+        double x1, y1, z1;
+        f.read(reinterpret_cast<char*>(&x1), sizeof(double));
+        f.read(reinterpret_cast<char*>(&y1), sizeof(double));
+        f.read(reinterpret_cast<char*>(&z1), sizeof(double));
+        out << x1 << " ";
+        out << y1 << " ";
+        out << z1 << "\n";
+
+		double x2, y2, z2;
+        f.read(reinterpret_cast<char*>(&x2), sizeof(double));
+        f.read(reinterpret_cast<char*>(&y2), sizeof(double));
+        f.read(reinterpret_cast<char*>(&z2), sizeof(double));
+        out << x2 << " ";
+        out << y2 << " ";
+        out << z2 << "\n";
+
+		double x3, y3, z3;
+        f.read(reinterpret_cast<char*>(&x3), sizeof(double));
+        f.read(reinterpret_cast<char*>(&y3), sizeof(double));
+        f.read(reinterpret_cast<char*>(&z3), sizeof(double));
+        out << x3 << " ";
+        out << y3 << " ";
+        out << z3 << "\n\n";
+
+    }
+
+    f.close();
+    out.close();
+
+    return 1;
+}

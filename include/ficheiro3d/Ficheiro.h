@@ -9,5 +9,6 @@ using namespace std;
 
 bool escreverBinario(const string nome_ficheiro, const vector<Triangle>& lista);
 vector<Triangle> lerBinario(const string nome_ficheiro);
+int ficheiroParaTexto(const string nome_ficheiro, const string output);
 
 #endif

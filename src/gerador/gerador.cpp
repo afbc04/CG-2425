@@ -158,16 +158,13 @@ vector<Triangle> geraPlano(double length, double divisions) {
             double ponto_inicial_z = -inicio;
             ponto_inicial_z += (j*salto);
 
-            Ponto p1_1 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z + salto);
-            Ponto p1_2 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z);
-            Ponto p1_3 = Ponto(ponto_inicial_x,0,ponto_inicial_z);
-            
-            Ponto p2_1 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z + salto);
-            Ponto p2_2 = Ponto(ponto_inicial_x,0,ponto_inicial_z);
-            Ponto p2_3 = Ponto(ponto_inicial_x,0,ponto_inicial_z + salto);
+            Ponto p1 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z + salto);
+            Ponto p2 = Ponto(ponto_inicial_x + salto,0,ponto_inicial_z);
+            Ponto p3 = Ponto(ponto_inicial_x,0,ponto_inicial_z);
+            Ponto p4 = Ponto(ponto_inicial_x,0,ponto_inicial_z + salto);
 
-            lista.push_back(Triangle(p1_1,p1_2,p1_3));
-            lista.push_back(Triangle(p2_1,p2_2,p2_3));
+            lista.push_back(Triangle(p1,p2,p3));
+            lista.push_back(Triangle(p1,p3,p4));
 
         }
 
@@ -184,6 +181,7 @@ int main(int argn, char** argv) {
     const char* uso_box = "./generator box [TAMANHO] [DIVISÃO] [NOME DO FICHEIRO]\n";
     const char* uso_cone = "./generator cone [RAIO] [ALTURA] [SLICES] [STACKS] [NOME DO FICHEIRO]\n";
     const char* uso_plane = "./generator plane [TAMANHO] [DIVISÕES] [NOME DO FICHEIRO]\n";
+    const char* uso_txt = "./generator text [NOME DO FICHEIRO .3D] [NOME DO FICHEIRO TEXTO]\n";
 
     if (argn < 2) {
         cerr << "Argumentos inválidos!\n";
@@ -192,6 +190,7 @@ int main(int argn, char** argv) {
         cerr << uso_box;
         cerr << uso_cone;
         cerr << uso_plane;
+        cerr << uso_txt;
 
         return 1;
     }
@@ -318,6 +317,34 @@ int main(int argn, char** argv) {
         else {
             cerr << "Argumentos em falta";
             cerr << uso_plane;
+            return 2;
+        }
+
+    }
+
+    //.3D para Texto
+    if (strcmp(argv[1],"text") == 0) {
+
+        if (argn >= 4) {
+
+            //Criar ficheiro texto
+            if (ficheiroParaTexto(argv[2],argv[3])) {
+
+                cout << "Ficheiro " << argv[3] << " foi criado!\n";
+                return 0;
+
+            }
+            else {
+
+                cerr << "Não foi possivel criar o " << argv[3] << "!\n";
+                return 1;
+
+            }
+
+        }
+        else {
+            cerr << "Argumentos em falta";
+            cerr << uso_txt;
             return 2;
         }
 
